@@ -14,7 +14,7 @@ Known limitations:
 How to use it.
 --------------
 
-Currently the extension is only available over composer use following package to your composer.json
+Currently the extension is only available over composer add following package to your composer.json
 
 * teamsisu/contao-mm-frontendInput
 
