@@ -1,0 +1,44 @@
+{
+    "name": "teamsisu/contao-mm-frontendInput",
+    "description": "An Contao Extension to provide Frontend Forms to fill out MetaModel Items",
+    "keywords": ["contao", "metamodels", "frontend","form"],
+    "type": "contao-module",
+    "homepage": "https://github.com/Teamsisu/contao-mm-frontendInput",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Martin Treml",
+            "email": "martin.treml@teamsisu.at",
+            "homepage": "http://www.teamsisu.at",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Teamsisu/contao-mm-frontendInput/issues",
+        "irc": "irc://irc.freenode.org/contao.mm",
+        "source": "https://github.com/Teamsisu/contao-mm-frontendInput"
+    },
+    "require": {
+        "php": ">=5.3",
+        "contao/core": ">=3.3,<4.0",
+        "metamodels/core":"dev-tng",
+        "contao-legacy/haste": ">=4.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Teamsisu\\MetaModelsFrontendInput": "src"
+        }
+    },
+    "extra": {
+        "contao": {
+            "sources": {
+                "contao": "system/modules/contao-mm-frontendInput"
+            }
+        },
+        "branch-alias": {
+            "dev-tng": "2.0.x-dev"
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
