@@ -1,5 +1,5 @@
 {
-    "name": "teamsisu/contao-mm-frontendInput",
+    "name": "teamsisu/contao-mm-frontend-input",
     "description": "An Contao Extension to provide Frontend Forms to fill out MetaModel Items",
     "keywords": ["contao", "metamodels", "frontend","form"],
     "type": "contao-module",
