@@ -163,6 +163,11 @@ class Collection implements \Iterator, \ArrayAccess
         return $this->items[$this->intCursor];
     }
 
+    public function getItemByKey($key)
+    {
+
+    }
+
     /**
      * @inheritdoc
      */

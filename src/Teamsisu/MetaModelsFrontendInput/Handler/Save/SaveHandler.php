@@ -68,7 +68,7 @@ class SaveHandler
      */
     public function setValue($value)
     {
-        $this->item->set($this->field->getColName(), $value);
+        $this->item->set($this->field->getColName(), $this->field->mmAttribute->widgetToValue($value, null));
     }
 
 } 

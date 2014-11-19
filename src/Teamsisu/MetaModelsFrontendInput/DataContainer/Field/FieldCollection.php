@@ -26,6 +26,13 @@ class FieldCollection extends Collection
 {
 
     /**
+     * The index array to allow a item search
+     *
+     * @var array
+     */
+    protected $index = array();
+
+    /**
      * Instantiate an field collection with an existing array of BaseField Items (optional)
      *
      * @param array $arrItems
@@ -43,7 +50,24 @@ class FieldCollection extends Collection
     public function addItem(BaseField $objItem)
     {
         $this->items[] = $objItem;
+        end($this->items);
+        $key = key($this->items);
+        $this->index[$key] = $objItem->get('colName');
     }
 
+    /**
+     * Get an item by its colName
+     * @param string $colName
+     * @return BaseField|bool
+     */
+    public function findItemByColName($colName)
+    {
 
+        if(in_array($colName, $this->index)){
+            return $this->items[array_search($colName, $this->index)];
+        }
+
+        return false;
+
+    }
 }

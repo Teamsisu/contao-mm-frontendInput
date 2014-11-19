@@ -245,7 +245,9 @@ class InputMaskProvider
                 $saveHandler = $field->getSaveHandler();
                 $saveHandler->setItem($this->mmItem);
                 $value = $saveHandler->parseWidget($widget);
-                $saveHandler->setValue($value);
+                if($value){
+                    $saveHandler->setValue($value);
+                }
 
             }
 
@@ -324,6 +326,16 @@ class InputMaskProvider
     {
         $objFile = FilesModel::findByUuid($uploadPath);
         $this->uploadPath = $objFile->path;
+    }
+
+    /**
+     * Returns an Item from the FieldsCollection by its column name or false if not found
+     * @param string $colName
+     * @return bool|BaseField
+     */
+    public function findItemByColName($colName)
+    {
+        return $this->fields->findItemByColName($colName);
     }
 
 }

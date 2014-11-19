@@ -38,6 +38,13 @@ class UploadSaveHandler extends SaveHandler
     {
 
         /**
+         * Check if file in session exists
+         */
+        if(!isset($_SESSION['FILES'][$this->field->getColName()])){
+            return false;
+        }
+
+        /**
          * Rename the file (move) to the new location with the new name
          */
         $ext = pathinfo($_SESSION['FILES'][$this->field->getColName()]['name'], PATHINFO_EXTENSION);
@@ -49,6 +56,11 @@ class UploadSaveHandler extends SaveHandler
              * Add File to the DBAFS
              */
             $dbafsFile = \Dbafs::addResource($name);
+
+            /**
+             * Remove file from session
+             */
+            unset($_SESSION['FILES'][$this->field->getColName()]);
 
             /**
              * Return UUID

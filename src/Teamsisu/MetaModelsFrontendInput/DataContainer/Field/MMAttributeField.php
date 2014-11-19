@@ -18,6 +18,7 @@ namespace Teamsisu\MetaModelsFrontendInput\DataContainer\Field;
 
 use MetaModels\MetaModel;
 use Teamsisu\MetaModelsFrontendInput\Handler\Save\ComplexSaveHandler;
+use Teamsisu\MetaModelsFrontendInput\Handler\Save\SaveHandler;
 use Teamsisu\MetaModelsFrontendInput\Handler\Save\UploadSaveHandler;
 use Teamsisu\MetaModelsFrontendInput\Handler\Save\SimpleSaveHandler;
 
@@ -120,12 +121,8 @@ class MMAttributeField extends BaseField
                 $this->setSaveHandler(new UploadSaveHandler($this));
                 break;
 
-            case 'complex':
-                $this->setSaveHandler(new ComplexSaveHandler($this));
-                break;
-
             default:
-                $this->setSaveHandler(new SimpleSaveHandler($this));
+                $this->setSaveHandler(new SaveHandler($this));
                 break;
         }
     }
