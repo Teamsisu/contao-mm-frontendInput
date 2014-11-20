@@ -82,39 +82,16 @@ class MMAttributeField extends BaseField
         }
 
         /**
-         * Get option values from non mm databases
+         * Get option values from select attributes
          */
-        if (is_a($this->mmAttribute, '\MetaModels\Attribute\Select\Select')) {
-
-            $objDatabase = \Database::getInstance();
-
-            $key = $this->mmAttribute->get('select_alias');
-            $value = $this->mmAttribute->get('select_column');
-            $table = $this->mmAttribute->get('select_table');
-            $where = $this->mmAttribute->get('select_where');
-
-            $sql = "SELECT $key AS `key`, $value AS `value` FROM $table";
-
-            if (!empty($where)) {
-                $sql .= " WHERE " . $where;
-            }
-
-            $result = $objDatabase->prepare($sql)->execute();
-
-            $options = array();
-
-            while ($result->next()) {
-                $options[$result->key] = $result->value;
-            }
-
-            $this->set('options', $options);
-
+        if(is_a($this->mmAttribute, '\MetaModels\Attribute\Select\AbstractSelect')){
+            $this->set('options', $this->mmAttribute->getFilterOptions(null, false));
         }
+
 
         /**
          * Add Save Handler
          */
-
         switch ($this->fieldType) {
 
             case 'upload':
