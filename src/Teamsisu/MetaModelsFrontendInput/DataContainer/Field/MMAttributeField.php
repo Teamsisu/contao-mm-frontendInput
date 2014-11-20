@@ -73,7 +73,7 @@ class MMAttributeField extends BaseField
         }
 
         if (is_a($this->mmAttribute, '\MetaModels\Attribute\Url\Url')) {
-            $this->set('inputType', 'url');
+            $this->set('inputType', 'beUrl');
             $this->fieldType = 'complex';
         }
 

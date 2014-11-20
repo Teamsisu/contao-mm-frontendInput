@@ -29,4 +29,4 @@ $GLOBALS['MetaModelsFrontendInput']['allowedEvals'] = array(
 /**
  * Set the form url widget
  */
-$GLOBALS['TL_FFL']['url'] = 'Teamsisu\MetaModelsFrontendInput\FrontendIntegration\Form\FormURLField';
+$GLOBALS['TL_FFL']['beUrl'] = 'Teamsisu\MetaModelsFrontendInput\FrontendIntegration\Form\FormURLField';
