@@ -97,22 +97,7 @@ class InputMaskProvider
 
         $this->setUploadPath($uploadPath);
 
-        $this->fields = new FieldCollection();
-
-        /**
-         * Get fields from the InputMask with given ID
-         * and parse it as Item to the FieldCollection
-         */
-        $result = \Database::getInstance()->prepare("SELECT * FROM tl_metamodel_dcasetting WHERE pid = ? ORDER BY sorting ASC")->execute($maskID);
-        $this->parseFields($result->fetchAllAssoc());
-
-        /**
-         * Check for last fieldset
-         */
-        if ($this->openFieldset) {
-            $this->openFieldset = false;
-            $this->fields->addItem(new FieldsetField(array('legendtitle' => ''), $this->openFieldset));
-        }
+        $this->maskID = $maskID;
 
     }
 
@@ -122,8 +107,17 @@ class InputMaskProvider
      * @param array $data Result form the database
      * @throws \Exception When an unknown DCA-Type is used
      */
-    protected function parseFields(array $data)
+    public function parseFields()
     {
+
+        $this->fields = new FieldCollection();
+
+        /**
+         * Get fields from the InputMask with given ID
+         * and parse it as Item to the FieldCollection
+         */
+        $result = \Database::getInstance()->prepare("SELECT * FROM tl_metamodel_dcasetting WHERE pid = ? ORDER BY sorting ASC")->execute($this->maskID);
+        $data = $result->fetchAllAssoc();
 
         foreach ($data AS $item) {
 
@@ -149,6 +143,14 @@ class InputMaskProvider
                     break;
             }
 
+        }
+
+        /**
+         * Check for last fieldset
+         */
+        if ($this->openFieldset) {
+            $this->openFieldset = false;
+            $this->fields->addItem(new FieldsetField(array('legendtitle' => ''), $this->openFieldset));
         }
 
     }
@@ -189,6 +191,16 @@ class InputMaskProvider
          */
         if ($attribute->getFieldType() == 'upload') {
             $attribute->setUploadPath($this->uploadPath);
+
+            /**
+             * Check if an item is set and get the value to determine if an mandatory eval is to change
+             */
+            if($this->mmItem){
+                $value = $this->mmItem->get($attribute->get('colName'));
+                if(!empty($value)){
+                    $attribute->modifyEval('mandatory', false);
+                }
+            }
         }
 
         $this->fields->addItem($attribute);
@@ -308,25 +320,9 @@ class InputMaskProvider
         while ($this->fields->next()) {
             $field = $this->fields->current();
             $value = $this->mmItem->get($field->getColName());
-
-            if ($field->getFieldType() == 'complex') {
-                $value = $this->parseComplexValue($field, $value);
-            }
-            $field->set('value', $value);
+            $field->setDefaultValue($value);
         }
 
-    }
-
-    /**
-     * Parse an complex MetaModel value to an useable widget value
-     *
-     * @param BaseField $field
-     * @param mixed     $value
-     * @return mixed
-     */
-    protected function parseComplexValue(BaseField $field, $value)
-    {
-        return $field->mmAttribute->valueToWidget($value);
     }
 
     /**

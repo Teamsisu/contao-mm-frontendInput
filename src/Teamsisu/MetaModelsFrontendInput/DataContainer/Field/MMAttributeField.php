@@ -91,11 +91,11 @@ class MMAttributeField extends BaseField
         /**
          * Check for RTE support on longtext fields
          */
-        if(is_a($this->mmAttribute, '\MetaModels\Attribute\Longtext\Longtext')){
-            if(isset($data['rte']) && !empty($data['rte'])){
+        if (is_a($this->mmAttribute, '\MetaModels\Attribute\Longtext\Longtext')) {
+            if (isset($data['rte']) && !empty($data['rte'])) {
                 $this->rte = $data['rte'];
-                $class = $this->getEval('class').' '.$data['rte'];
-                if(!$this->modifyEval('class', $class)){
+                $class = $this->getEval('class') . ' ' . $data['rte'];
+                if (!$this->modifyEval('class', $class)) {
                     $this->addEval('class', $class);
                 }
             }
@@ -104,7 +104,7 @@ class MMAttributeField extends BaseField
         /**
          * Get option values from select attributes
          */
-        if(is_a($this->mmAttribute, '\MetaModels\Attribute\Select\AbstractSelect')){
+        if (is_a($this->mmAttribute, '\MetaModels\Attribute\Select\AbstractSelect')) {
             $this->set('options', $this->mmAttribute->getFilterOptions(null, false));
         }
 
@@ -137,11 +137,25 @@ class MMAttributeField extends BaseField
 
     /**
      * Get the RTE
+     *
      * @return null
      */
     public function getRTE()
     {
         return $this->rte;
+    }
+
+    /**
+     * Set the default value of the Attribute
+     *
+     * @param mixed $value
+     */
+    public function setDefaultValue($value)
+    {
+        $value = $this->mmAttribute->valueToWidget($value);
+
+        $this->set('value', $value);
+
     }
 
 }
