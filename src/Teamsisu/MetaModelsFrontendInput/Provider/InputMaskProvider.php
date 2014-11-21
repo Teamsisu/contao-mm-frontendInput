@@ -73,6 +73,15 @@ class InputMaskProvider
      */
     private $openFieldset = false;
 
+
+    /**
+     * An array where all RTE configs are stored
+     *
+     * @var array
+     */
+    protected $arrRTE = array();
+
+
     /**
      * Instantiate the Input Provider
      *
@@ -118,6 +127,9 @@ class InputMaskProvider
 
         foreach ($data AS $item) {
 
+            /**
+             * Check for RTE
+             */
             if (!$item['published']) {
                 continue;
             }
@@ -245,7 +257,7 @@ class InputMaskProvider
                 $saveHandler = $field->getSaveHandler();
                 $saveHandler->setItem($this->mmItem);
                 $value = $saveHandler->parseWidget($widget);
-                if($value){
+                if ($value) {
                     $saveHandler->setValue($value);
                 }
 
@@ -330,12 +342,59 @@ class InputMaskProvider
 
     /**
      * Returns an Item from the FieldsCollection by its column name or false if not found
+     *
      * @param string $colName
      * @return bool|BaseField
      */
     public function findItemByColName($colName)
     {
         return $this->fields->findItemByColName($colName);
+    }
+
+
+    /**
+     * Check if an RTE implementation is needed
+     *
+     * @return bool
+     */
+    public function isRTEenabled()
+    {
+
+        $this->fields->reset();
+        while ($this->fields->next()) {
+            $item = $this->fields->current();
+            if(method_exists($item, 'getRTE')){
+                if(!is_null($item->getRTE())){
+                    $this->arrRTE[$item->get('colName')] = $item->getRTE();
+                }
+            }
+        }
+
+        return count($this->arrRTE) ? true:false;
+
+    }
+
+    /**
+     * Get the whole RTE Config array
+     *
+     * @return array
+     */
+    public function getRTEConfigs()
+    {
+        return $this->arrRTE;
+    }
+
+    public function getRTECode()
+    {
+        ob_start();
+        foreach($this->getRTEConfigs() AS $field => $rte){
+            $selector = 'ctrl_'.$field;
+            include TL_ROOT.'/system/config/'.$rte.'.php';
+        }
+        $tinyMCECode = ob_get_contents();
+        ob_end_clean();
+
+        return $tinyMCECode;
     }
 
 }

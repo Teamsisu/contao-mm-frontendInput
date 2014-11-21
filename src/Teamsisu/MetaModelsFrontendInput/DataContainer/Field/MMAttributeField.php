@@ -39,6 +39,13 @@ class MMAttributeField extends BaseField
     public $mmAttribute;
 
     /**
+     * Is an RTE in use
+     *
+     * @var null
+     */
+    protected $rte = null;
+
+    /**
      * Instantiate the field an set all values
      *
      * @param array     $data
@@ -82,6 +89,19 @@ class MMAttributeField extends BaseField
         }
 
         /**
+         * Check for RTE support on longtext fields
+         */
+        if(is_a($this->mmAttribute, '\MetaModels\Attribute\Longtext\Longtext')){
+            if(isset($data['rte']) && !empty($data['rte'])){
+                $this->rte = $data['rte'];
+                $class = $this->getEval('class').' '.$data['rte'];
+                if(!$this->modifyEval('class', $class)){
+                    $this->addEval('class', $class);
+                }
+            }
+        }
+
+        /**
          * Get option values from select attributes
          */
         if(is_a($this->mmAttribute, '\MetaModels\Attribute\Select\AbstractSelect')){
@@ -113,6 +133,15 @@ class MMAttributeField extends BaseField
     public function setUploadPath(&$uploadPath)
     {
         $this->uploadPath = $uploadPath;
+    }
+
+    /**
+     * Get the RTE
+     * @return null
+     */
+    public function getRTE()
+    {
+        return $this->rte;
     }
 
 }
