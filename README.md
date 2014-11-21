@@ -27,15 +27,15 @@ https://github.com/Teamsisu/contao-mm-frontendInput/wiki/Usage
 Fields who are supported or in progress
 --------------
 
-*[x] Text
-*[x] Select
-*[x] Tags
-*[x] File - incl. file upload
-*[x] Longtext - incl. tinyMCE support 
-*[] MultiColumnWizard
-*[] Numeric
-*[] Dezimal
-*[x] URL
+- [x] Text
+- [x] Select
+- [x] Tags
+- [x] File - incl. file upload
+- [x] Longtext - incl. tinyMCE support 
+- [ ] MultiColumnWizard
+- [ ] Numeric
+- [ ] Dezimal
+- [x] URL
 
 
 Additional note
