@@ -101,7 +101,6 @@ class FormURLField extends \Widget
 		switch ($strKey)
 		{
 			case 'value':
-
                     if(is_array($this->varValue)){
                         return array($this->varValue[0], \Idna::decode($this->varValue[1]));
                     }else{
