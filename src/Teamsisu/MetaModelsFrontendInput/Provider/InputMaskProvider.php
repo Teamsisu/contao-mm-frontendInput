@@ -269,6 +269,7 @@ class InputMaskProvider
                 $saveHandler = $field->getSaveHandler();
                 $saveHandler->setItem($this->mmItem);
                 $value = $saveHandler->parseWidget($widget);
+
                 if ($value) {
                     $saveHandler->setValue($value);
                 }
@@ -317,8 +318,12 @@ class InputMaskProvider
          * Set default values to fields
          */
         $this->fields->reset();
+
         while ($this->fields->next()) {
             $field = $this->fields->current();
+            if(!method_exists($field, 'setDefaultValue')){
+                continue;
+            }
             $value = $this->mmItem->get($field->getColName());
             $field->setDefaultValue($value);
         }

@@ -85,7 +85,7 @@ class BaseField
     public function removeEval($key)
     {
 
-        if ($key = array_search($key, $this->eval)) {
+        if (array_key_exists($key, $this->eval)) {
             unset($this->eval[$key]);
 
             return true;
@@ -103,7 +103,7 @@ class BaseField
     public function modifyEval($key, $value)
     {
 
-        if (in_array($key, $this->eval)) {
+        if (array_key_exists($key, $this->eval)) {
             $this->eval[$key] = $value;
         }
 
@@ -118,7 +118,7 @@ class BaseField
      */
     public function getEval($key)
     {
-        if (in_array($key, $this->eval)) {
+        if (array_key_exists($key, $this->eval)) {
             return $this->eval[$key];
         }
 

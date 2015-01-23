@@ -109,7 +109,7 @@ class FormURLField extends \Widget
 				break;
 
 			case 'type':
-                    return 'beUrl';
+                    return 'text';
 				break;
 
 			default:

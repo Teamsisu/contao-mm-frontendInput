@@ -60,6 +60,22 @@ class SaveHandler
      */
     public function parseWidget($widget)
     {
+
+        if(is_a($widget, 'Contao\FormTextArea') || is_a($widget, 'Contao\FormTextField')){
+
+            if($this->field->getEval('allowHtml')){
+                $value = strip_tags(\String::decodeEntities($widget->value), \Config::get('allowedTags'));
+            }else{
+                $value = strip_tags(\String::decodeEntities($widget->value));
+            }
+
+            if($this->field->getEval('decodeEntities')){
+                return $value;
+            }else{
+                return specialchars($value);
+            }
+        }
+
         return $widget->value;
     }
 
